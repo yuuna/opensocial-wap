@@ -2,17 +2,20 @@ module OpensocialWap
   module Platform
     # Singleton Pattern
     extend self
-    
+
     def mobage(config, &block)
       @config = config
       @sandbox = false
+      @touch = false
       instance_eval(&block)
 
       consumer_key    = @consumer_key
       consumer_secret = @consumer_secret
       app_id          = @app_id
       container_host  = @sandbox ? 'sb.pf.mbga.jp' : 'pf.mbga.jp'
+      container_host.gsub!( /pf\./, "sp.pf." ) if @touch
       api_endpoint    = @sandbox ? 'http://sb.app.mbga.jp/api/restful/v1/' : "http://app.mbga.jp/api/restful/v1/"
+      api_endpoint.gsub!( /app\./, "sp.app." ) if @touch
 
       OpensocialWap::OAuth::Helpers::MobageHelper.configure do
         consumer_key    consumer_key

@@ -2,16 +2,17 @@ module OpensocialWap
   module Platform
     # Singleton Pattern
     extend self
-    
+
     def configure(config)
       @config = config
       @session = true
+      @touch = false
     end
 
     def consumer_key(key)
       @consumer_key = key
     end
-    
+
     def consumer_secret(secret)
       @consumer_secret = secret
     end
@@ -26,6 +27,10 @@ module OpensocialWap
 
     def app_id(app_id)
       @app_id = app_id
+    end
+
+    def touch(enabled = false)
+      @touch = enabled
     end
   end
 end
