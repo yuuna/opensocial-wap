@@ -6,13 +6,16 @@ require 'opensocial-wap/helpers/base'
 require 'opensocial-wap/helpers/url_helper'
 require 'opensocial-wap/helpers/form_tag_helper'
 require 'opensocial-wap/helpers/asset_tag_helper'
-require 'opensocial-wap/action_controller/controller_hook'
-require 'opensocial-wap/action_controller/metal/redirecting'
 require 'opensocial-wap/session/opensocial_wap_sid'
 require 'opensocial-wap/platform'
 require 'opensocial-wap/platform/gree'
 require 'opensocial-wap/platform/mixi'
 require 'opensocial-wap/platform/mobage'
+
+ActiveSupport.on_load(:action_controller) do
+  require 'opensocial-wap/action_controller/controller_hook'
+  require 'opensocial-wap/action_controller/metal/redirecting'
+end
 
 module OpensocialWap
   class Railtie < Rails::Railtie
@@ -25,7 +28,7 @@ module OpensocialWap
     initializer 'opensocial-wap.load_middleware', :after=> :load_config_initializers do
       if config.opensocial_wap && config.opensocial_wap.oauth
         helper_class = config.opensocial_wap.oauth.helper_class
-        
+
         if helper_class
           puts "opensocial-wap is enabled with #{helper_class}"
           config.app_middleware.insert_before ActionDispatch::Cookies, OpensocialWap::Rack::OpensocialOauth, :helper_class => helper_class
