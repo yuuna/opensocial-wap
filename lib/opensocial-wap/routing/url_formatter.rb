@@ -9,6 +9,11 @@ module OpensocialWap
       # アプリケーションサーバのURL(スキーム・FQDNも含む)を返す.
       # もし url が外部サーバであれば、FALSE を返す.
       def plain_url_for(url, host, protocol = nil, port = nil)
+        # 変換済みなら、何もしない
+        if url =~ %r"^\?"
+          return false
+        end
+
         # URL文字列をプロトコル部分とホスト部分に分割.
         url_parts = url.scan(%r{(^\w[\w+.-]*://)([\w\d\.:-]*)/?}).first
         if url_parts.nil? || url_parts[0].nil?
@@ -21,7 +26,7 @@ module OpensocialWap
           url
         end
       end
-      
+
       # クエリ形式("?url=エンコードされたURL")のURLを返す.
       # URL は スキーム・FQDNも含む形式にすること.
       def query_url_for(url, params = nil)
@@ -29,7 +34,7 @@ module OpensocialWap
         params.merge!({ :url => url })
         "?" + params.select{|k,v| v}.collect{|k,v| "#{k}=#{ERB::Util.url_encode(v)}" }.join('&')
       end
-      
+
       # コンテナのURLを含む形式の完全URL.
       # URL は スキーム・FQDNも含む形式にすること.
       def full_url_for(container_url, app_id, url, params = nil)
@@ -39,7 +44,7 @@ module OpensocialWap
         end
         "#{container_url}/#{app_id}/#{query_url_for(url, params)}"
       end
-      
+
       # URLのうち、プロトコルとホストからなる部分を返す.
       def base_url(host, protocol = nil, port = nil)
         protocol ||= "http"
