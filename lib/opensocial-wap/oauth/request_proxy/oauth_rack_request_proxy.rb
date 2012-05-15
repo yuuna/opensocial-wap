@@ -43,12 +43,10 @@ module OpensocialWap::OAuth::RequestProxy
         params_str.split('&').inject({}) do |hsh, i|
           kv = i.split('=')
           key = ::Rack::Utils::unescape(kv[0])
-          v = kv[1] ? ::Rack::Utils::unescape(kv[1]) : ''
-          v = v.to_i.to_s == v ? v.to_i : v       # GREEでは、数値的にソートされてnormalizeされてしまうので、その対応
           if hsh[key]
-            hsh[key] << v
+            hsh[key] << kv[1] ? ::Rack::Utils::unescape(kv[1]) : ''
           else
-            hsh[key] = [ v ]
+            hsh[key] = [kv[1] ? ::Rack::Utils::unescape(kv[1]) : '']
           end
           hsh
         end

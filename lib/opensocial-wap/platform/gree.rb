@@ -15,6 +15,7 @@ module OpensocialWap
       api_endpoint    = @sandbox ? 'http://os-sb.gree.jp/api/rest/' : "http://os.gree.jp/api/rest/"
 
       OpensocialWap::OAuth::Helpers::BasicHelper.configure do
+        proxy_class     OpensocialWap::OAuth::RequestProxy::OAuthRackRequestProxyForGree
         consumer_key    consumer_key
         consumer_secret consumer_secret
         api_endpoint    api_endpoint
