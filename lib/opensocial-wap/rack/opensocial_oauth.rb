@@ -37,16 +37,16 @@ module OpensocialWap
         request = ::Rack::Request.new(env)
         helper = @helper_class.new(request)
 
-        if request.env['HTTP_AUTHORIZATION']
+#        if request.env['HTTP_AUTHORIZATION']
           if helper.verify
             verified = true
           else
             verified = false
           end
-        else
+#        else
           # false if HTTP_AUTHORIZATION header is not available.
-          verified = false
-        end
+#          verified = false
+#        end
         request.env['opensocial-wap.oauth-verified'] = verified
         request.env['opensocial-wap.helper'] = helper
         verified
