@@ -14,6 +14,8 @@ module OpensocialWap::OAuth::Helpers
           @access_token = ::OAuth::AccessToken.new(consumer,
                                                    request_proxy.parameters['oauth_token'],
                                                    request_proxy.parameters['oauth_token_secret'])
+          p @access_token
+          p request_proxy.parameters
           signature = ::OAuth::Signature.build(request_proxy, opts)
           
           if logger = @request.logger
