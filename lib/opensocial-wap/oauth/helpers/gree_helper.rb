@@ -15,7 +15,13 @@ module OpensocialWap::OAuth::Helpers
                                                    request_proxy.parameters['oauth_token'],
                                                    request_proxy.parameters['oauth_token_secret'])
           signature = ::OAuth::Signature.build(request_proxy, opts)
-          p signature
+          p signature.verify
+            p "oauth signature : #{::OAuth::Signature.sign(request_proxy, opts)}"
+            p "=== OauthHandler OAuth verification: ==="
+            p "  authorization header: #{@request.env['HTTP_AUTHORIZATION']}"
+            p "  base string:          #{signature.signature_base_string}"
+            p "  signature:            #{signature.signature}"      
+
           if logger = @request.logger
             logger.debug "oauth signature : #{::OAuth::Signature.sign(request_proxy, opts)}"
             logger.debug "=== OauthHandler OAuth verification: ==="
