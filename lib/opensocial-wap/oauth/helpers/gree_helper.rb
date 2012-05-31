@@ -11,8 +11,6 @@ module OpensocialWap::OAuth::Helpers
           opts = {
             :consumer_secret => self.class.consumer_secret,
             :token_secret => request_proxy.parameters['oauth_token_secret'] }
-          p request_proxy
-          return request_proxy
           @access_token = ::OAuth::AccessToken.new(consumer,
                                                    request_proxy.parameters['oauth_token'],
                                                    request_proxy.parameters['oauth_token_secret'])
