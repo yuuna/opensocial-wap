@@ -22,7 +22,7 @@ module OpensocialWap
         app_id          app_id
       end
       @config.opensocial_wap.oauth = OpensocialWap::Config::OAuth.configure do
-        helper_class OpensocialWap::OAuth::Helpers::BasicHelper
+        helper_class OpensocialWap::OAuth::Helpers::GreeHelper
       end
       @config.opensocial_wap.url = OpensocialWap::Config::Url.configure do
         container_host container_host
