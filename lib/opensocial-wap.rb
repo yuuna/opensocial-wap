@@ -6,6 +6,7 @@ require 'opensocial-wap/oauth/request_proxy/oauth_rack_request_proxy_for_mixi'
 require 'opensocial-wap/oauth/request_proxy/oauth_rack_request_proxy_for_gree'
 require 'opensocial-wap/oauth/helpers/basic_helper'
 require 'opensocial-wap/oauth/helpers/mobage_helper'
+require 'opensocial-wap/oauth/helpers/gree_helper'
 require 'opensocial-wap/oauth/client_helper'
 require 'opensocial-wap/oauth/client/helper'
 
