@@ -15,6 +15,7 @@ module OpensocialWap::OAuth::Helpers
                                                    request_proxy.parameters['oauth_token'],
                                                    request_proxy.parameters['oauth_token_secret'])
           signature = ::OAuth::Signature.build(request_proxy, opts)
+          p signature
           if logger = @request.logger
             logger.debug "oauth signature : #{::OAuth::Signature.sign(request_proxy, opts)}"
             logger.debug "=== OauthHandler OAuth verification: ==="
@@ -29,8 +30,6 @@ module OpensocialWap::OAuth::Helpers
         end        
 
         def consumer 
-          p self.class.consumer_key
-          p self.class.consumer_secret
           @consumer ||= ::OAuth::Consumer.new(self.class.consumer_key, self.class.consumer_secret)
         end
 
