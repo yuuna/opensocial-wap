@@ -14,10 +14,7 @@ module OpensocialWap::OAuth::Helpers
           @access_token = ::OAuth::AccessToken.new(consumer,
                                                    request_proxy.parameters['oauth_token'],
                                                    request_proxy.parameters['oauth_token_secret'])
-          p @access_token
-          p request_proxy.parameters
           signature = ::OAuth::Signature.build(request_proxy, opts)
-          
           if logger = @request.logger
             logger.debug "oauth signature : #{::OAuth::Signature.sign(request_proxy, opts)}"
             logger.debug "=== OauthHandler OAuth verification: ==="
@@ -30,6 +27,13 @@ module OpensocialWap::OAuth::Helpers
         rescue Exception => e
           false
         end        
+
+        def consumer 
+          p self.class.consumer_key
+          p self.class.consumer_secret
+          @consumer ||= ::OAuth::Consumer.new(self.class.consumer_key, self.class.consumer_secret)
+        end
+
 
     def authorization_header(api_request, options = nil)
           opts = { :consumer => consumer }
